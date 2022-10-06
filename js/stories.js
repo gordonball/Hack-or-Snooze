@@ -51,6 +51,8 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/** Adds story to the beginning of story list when form is submitted */
+
 async function submitNewStory(evt) {
   evt.preventDefault();
 
@@ -58,7 +60,9 @@ async function submitNewStory(evt) {
   const title = $("#create-title").val();
   const url = $("#create-url").val();
 
-  await storyList.addStory(currentUser, {title, author, url});
+  const story = await storyList.addStory(currentUser, {title, author, url});
+  $allStoriesList.prepend(generateStoryMarkup(story));
+
 }
 
 $submitForm.on("submit", submitNewStory);
