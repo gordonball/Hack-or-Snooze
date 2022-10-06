@@ -51,6 +51,7 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+
 /** Adds story to the beginning of story list when form is submitted */
 
 async function submitNewStory(evt) {
@@ -66,3 +67,17 @@ async function submitNewStory(evt) {
 }
 
 $submitForm.on("submit", submitNewStory);
+
+/** Put list of favorites on page */
+function putFavoritesOnPage() {
+
+  $favoriteStories.empty();
+
+  // loop through all of our stories and generate HTML for them
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $favoriteStories.append($story);
+  }
+
+  $favoriteStories.show();
+}

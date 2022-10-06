@@ -18,6 +18,9 @@ const $body = $("body");
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
 
+
+const $favoriteStories = $("#favorite-stories")
+
 const $submitForm = $("#submit-form");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -26,6 +29,7 @@ const $author = $("#create-author");
 const $title = $("#create-title");
 const $url = $("#create-url");
 
+const $navFavorites = $("#nav-favorites")
 const $navSubmit = $("#nav-submit");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");

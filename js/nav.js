@@ -9,11 +9,24 @@
 function navSubmitStory(evt) {
   evt.preventDefault();
   hidePageComponents();
+  $favoriteStories.hide();
   $submitForm.show();
   $allStoriesList.show();
 }
 
 $navSubmit.on("click", navSubmitStory);
+
+/** Show favorites list of current user when favorites link is clicked. */
+
+function navShowFavorites(evt) {
+  evt.preventDefault();
+  hidePageComponents();
+  $submitForm.hide();
+  putFavoritesOnPage();
+
+}
+
+$navFavorites.on("click", navShowFavorites);
 
 /** Show main list of all stories when click site name */
 

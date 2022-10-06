@@ -24,8 +24,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return this.url;
+    return new URL(this.url).host;
   }
 }
 
@@ -88,6 +87,8 @@ class StoryList {
     return story;
 
   }
+
+
 }
 
 
@@ -147,6 +148,29 @@ class User {
       },
       response.data.token
     );
+  }
+
+  /**  */
+  async addFavorite(story) {
+    this.favorites.push(story);
+    const token = this.loginToken;
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "POST",
+      data: { "token": token },
+    });
+  }
+
+  /**  */
+  async removeFavorite(story) {
+    this.favorites.splice(this.favorites.indexOf(story), 1);
+    const token = this.loginToken;
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "DELETE",
+      data: { "token": token },
+    });
+    console.log(response.data);
   }
 
   /** Login in user with API, make User instance & return it.
