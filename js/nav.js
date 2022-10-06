@@ -4,6 +4,17 @@
  * Handling navbar clicks and updating navbar
  */
 
+/** Show story submit form when submit link is clicked */
+
+function navSubmitStory(evt) {
+  evt.preventDefault();
+  hidePageComponents();
+  $submitForm.show();
+  $allStoriesList.show();
+}
+
+$navSubmit.on("click", navSubmitStory);
+
 /** Show main list of all stories when click site name */
 
 function navAllStories(evt) {
