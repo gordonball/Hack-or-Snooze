@@ -73,7 +73,7 @@ function putFavoritesOnPage() {
 
   $favoriteStories.empty();
 
-  // loop through all of our stories and generate HTML for them
+  // loop through all of our favorite stories and generate HTML for them
   for (let story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
     $favoriteStories.append($story);

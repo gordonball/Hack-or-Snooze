@@ -24,7 +24,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    return new URL(this.url).host;
+    return new URL(this.url).hostname;
   }
 }
 
@@ -150,7 +150,10 @@ class User {
     );
   }
 
-  /**  */
+  /** Add story to array `favorites` of the current user
+   *
+   *  Update current user's favorites in API
+   */
   async addFavorite(story) {
     this.favorites.push(story);
     const token = this.loginToken;
@@ -161,7 +164,10 @@ class User {
     });
   }
 
-  /**  */
+  /** Remove story from array `favorites` of the current user
+   *
+   *  Update current user's favorites in API
+   */
   async removeFavorite(story) {
     this.favorites.splice(this.favorites.indexOf(story), 1);
     const token = this.loginToken;
