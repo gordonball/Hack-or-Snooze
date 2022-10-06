@@ -1,5 +1,16 @@
 "use strict";
 
+
+/*
+
+TOKEN
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6I
+mdvcmRvbjIiLCJpYXQiOjE2NjUwNzc5NDl9
+.3S1eO1TUfLFDijlsXiTcSUIMASm5oCOj6fUIn - IIIFQ
+
+*/
+
 // So we don't have to keep re-finding things on page, find DOM elements once:
 
 const $body = $("body");
