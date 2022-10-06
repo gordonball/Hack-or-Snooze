@@ -56,9 +56,9 @@ function putStoriesOnPage() {
 async function submitNewStory(evt) {
   evt.preventDefault();
 
-  const author = $("#create-author").val();
-  const title = $("#create-title").val();
-  const url = $("#create-url").val();
+  const title = $title.val();
+  const author = $author.val();
+  const url = $url.val();
 
   const story = await storyList.addStory(currentUser, {title, author, url});
   $allStoriesList.prepend(generateStoryMarkup(story));

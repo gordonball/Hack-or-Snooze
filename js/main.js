@@ -22,6 +22,10 @@ const $submitForm = $("#submit-form");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
+const $author = $("#create-author");
+const $title = $("#create-title");
+const $url = $("#create-url");
+
 const $navSubmit = $("#nav-submit");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
