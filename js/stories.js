@@ -24,8 +24,8 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
   return $(`
-      <li id="${story.storyId}">
-        ${makeStarHtml(story)}
+      <li class="Story" id="${story.storyId}">
+        ${getStarHtml(story)}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -36,30 +36,41 @@ function generateStoryMarkup(story) {
     `);
 }
 
-/** creates  */
-function makeStarHtml(story) {
+/** Creates a Bootstrap Icon of bi-star-fill or bi-star depending
+ *  if the story is favorited or not
+ *
+ *  Returns a HTML string
+ */
+
+function getStarHtml(story) {
   const isFavorite = currentUser.isFavorite(story);
   console.log(isFavorite);
   const starType = isFavorite ? "-fill" : "";
-  return `<i class="bi-star${starType}"></i>`
+  return `<i class="Star bi-star${starType}"></i>`;
 }
+
+/** When Bootstrap Icon is clicked:
+ *
+ * - Toggles Bootstrap icon
+ * - Updates API for target story
+ */
 
 async function handleStarClick(evt) {
   const $target = $(evt.target);
-  const $closestLi = $target.closest("li");
+  const $closestLi = $target.closest(".Story");
   const storyId = $closestLi.attr("id");
   const story = await Story.getStory(storyId);
   if ($target.hasClass("bi-star-fill")) {
     await currentUser.removeFavorite(story);
     $target.toggleClass("bi-star-fill bi-star");
   } else {
-    await currentUser.addFavorite(story)
+    await currentUser.addFavorite(story);
     $target.toggleClass("bi-star bi-star-fill");
   }
 }
 
-$allStoriesList.on("click", "i", handleStarClick);
-$favoriteStories.on("click", "i", handleStarClick);
+$allStoriesList.on("click", ".Star", handleStarClick);
+$favoriteStories.on("click", ".Star", handleStarClick);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 

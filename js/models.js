@@ -27,14 +27,18 @@ class Story {
     return new URL(this.url).hostname;
   }
 
-  //TODO: make doc string
-  /**  */
+  /** Fetches a story from the API
+   *
+   *  Takes in a story's storyId
+   *
+   *  Returns a new Story instance of the fetched story
+   */
   static async getStory(storyId) {
     const response = await axios({
       url: `${BASE_URL}/stories/${storyId}`,
       method: "GET",
     });
-    console.log(response.data.story)
+    console.log(response.data.story);
     return new Story(response.data.story);
 
   }
@@ -194,7 +198,7 @@ class User {
     console.log(response.data);
   }
 
-  /** returns true or false if story is favorited or not. */
+  /** Returns true or false if story is favorited or not. */
   isFavorite(story) {
     return this.favorites.some(s => s.storyId === story.storyId);
   }
