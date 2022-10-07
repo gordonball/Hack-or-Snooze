@@ -25,6 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li class="Story" id="${story.storyId}">
+        ${getTrashHtml(story)}
         ${getStarHtml(story)}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -49,6 +50,15 @@ function getStarHtml(story) {
   return `<i class="Star bi-star${starType}"></i>`;
 }
 
+//TODO: docstring
+/** */
+
+function getTrashHtml(story) {
+  const isMyStory = currentUser.isMyStory(story);
+  return isMyStory ? '<i class="Trash bi-trash"></i>' : "";
+
+}
+
 /** When Bootstrap Icon is clicked:
  *
  * - Toggles Bootstrap icon
@@ -57,8 +67,8 @@ function getStarHtml(story) {
 
 async function handleStarClick(evt) {
   const $target = $(evt.target);
-  const $closestLi = $target.closest(".Story");
-  const storyId = $closestLi.attr("id");
+  const $closestStory = $target.closest(".Story");
+  const storyId = $closestStory.attr("id");
   const story = await Story.getStory(storyId);
   if ($target.hasClass("bi-star-fill")) {
     await currentUser.removeFavorite(story);
@@ -69,8 +79,26 @@ async function handleStarClick(evt) {
   }
 }
 
+//TODO: docstring
+/** */
+
+async function handleTrashClick(evt) {
+  const $target = $(evt.target);
+  const $closestStory = $target.closest(".Story");
+  const storyId = $closestStory.attr("id");
+
+  await storyList.removeStory(currentUser, storyId);
+
+  putStoriesOnPage();
+}
+
+
 $allStoriesList.on("click", ".Star", handleStarClick);
+$allStoriesList.on("click", ".Trash", handleTrashClick);
 $favoriteStories.on("click", ".Star", handleStarClick);
+$myStories.on("click", ".Star", handleStarClick);
+$myStories.on("click", ".Trash", handleTrashClick);
+
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
@@ -117,4 +145,19 @@ function putFavoritesOnPage() {
   }
 
   $favoriteStories.show();
+}
+
+/** Put list of user's own submitted stories on page */
+
+function putMyStoriesOnPage() {
+
+  $myStories.empty();
+
+  // loop through all of our favorite stories and generate HTML for them
+  for (let story of currentUser.ownStories) {
+    const $story = generateStoryMarkup(story);
+    $myStories.append($story);
+  }
+
+  $myStories.show();
 }

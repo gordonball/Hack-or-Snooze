@@ -98,12 +98,28 @@ class StoryList {
     });
     const story = new Story(response.data.story);
     this.stories.unshift(story);
+    currentUser.ownStories.push(story);
     console.log("test");
 
     return story;
 
   }
 
+  //TODO: docstring
+  async removeStory(user, storyId) {
+
+    this.stories = this.stories.filter(s => s.storyId !== storyId);
+    currentUser.ownStories = currentUser.ownStories.filter(s => s.storyId !== storyId);
+
+
+
+    const token = user.loginToken;
+    const response = await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "DELETE",
+      data: { "token": token }
+    });
+  }
 
 }
 
@@ -203,6 +219,10 @@ class User {
     return this.favorites.some(s => s.storyId === story.storyId);
   }
 
+  //TODO: docstring
+  isMyStory(story) {
+    return this.ownStories.some(s => s.storyId === story.storyId);
+  }
   /** Login in user with API, make User instance & return it.
 
    * - username: an existing user's username
