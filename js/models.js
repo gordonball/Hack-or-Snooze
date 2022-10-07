@@ -27,6 +27,8 @@ class Story {
     return new URL(this.url).hostname;
   }
 
+  //TODO: make doc string
+  /**  */
   static async getStory(storyId) {
     const response = await axios({
       url: `${BASE_URL}/stories/${storyId}`,
@@ -181,20 +183,22 @@ class User {
    *  Update current user's favorites in API
    */
   async removeFavorite(story) {
+    console.debug("before slice", this.favorites);
     this.favorites.splice(this.favorites.indexOf(story), 1);
+    console.log("after slice", this.favorites);
     const token = this.loginToken;
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: "DELETE",
       data: { "token": token },
     });
-    console.log(story);
+    console.log("fav story", story);
     console.log(response.data);
   }
 
   /** returns true or false if story is favorited or not. */
   isFavorite(story) {
-    return this.favorites.includes(story);
+    return this.favorites.some(s => s.storyId === story.storyId);
   }
 
   /** Login in user with API, make User instance & return it.

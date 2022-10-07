@@ -29,6 +29,7 @@ const $author = $("#create-author");
 const $title = $("#create-title");
 const $url = $("#create-url");
 
+const $navAll = $("#nav-all");
 const $navFavorites = $("#nav-favorites");
 const $navSubmit = $("#nav-submit");
 const $navLogin = $("#nav-login");
@@ -45,6 +46,8 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
+    $submitForm,
+    $favoriteStories,
   ];
   components.forEach(c => c.hide());
 }

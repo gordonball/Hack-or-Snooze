@@ -39,6 +39,7 @@ function generateStoryMarkup(story) {
 /** creates  */
 function makeStarHtml(story) {
   const isFavorite = currentUser.isFavorite(story);
+  console.log(isFavorite);
   const starType = isFavorite ? "-fill" : "";
   return `<i class="bi-star${starType}"></i>`
 }
@@ -49,14 +50,11 @@ async function handleStarClick(evt) {
   const storyId = $closestLi.attr("id");
   const story = await Story.getStory(storyId);
   if ($target.hasClass("bi-star-fill")) {
-    console.log(currentUser);
     await currentUser.removeFavorite(story);
-    this.classList.remove("bi-star-fill");
-    this.classList.add("bi-star");
+    $target.toggleClass("bi-star-fill bi-star");
   } else {
     await currentUser.addFavorite(story)
-    this.classList.remove("bi-star");
-    this.classList.add("bi-star-fill");
+    $target.toggleClass("bi-star bi-star-fill");
   }
 }
 
