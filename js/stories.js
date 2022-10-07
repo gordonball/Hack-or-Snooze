@@ -44,20 +44,24 @@ function makeStarHtml(story) {
 }
 
 async function handleStarClick(evt) {
-  const isFavorite = currentUser.isFavorite(evt);
-  if (isFavorite) {
+  const $target = $(evt.target);
+  const $closestLi = $target.closest("li");
+  const storyId = $closestLi.attr("id");
+  const story = await Story.getStory(storyId);
+  if ($target.hasClass("bi-star-fill")) {
     console.log(currentUser);
-    // await currentUser.removeFavorite(story);
+    await currentUser.removeFavorite(story);
     this.classList.remove("bi-star-fill");
     this.classList.add("bi-star");
   } else {
-    // await currentUser.addFavorite(story)
+    await currentUser.addFavorite(story)
     this.classList.remove("bi-star");
     this.classList.add("bi-star-fill");
   }
 }
 
-$allStoriesList.on("click", "i", handleStarClick)
+$allStoriesList.on("click", "i", handleStarClick);
+$favoriteStories.on("click", "i", handleStarClick);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 

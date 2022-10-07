@@ -26,6 +26,16 @@ class Story {
   getHostName() {
     return new URL(this.url).hostname;
   }
+
+  static async getStory(storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "GET",
+    });
+    console.log(response.data.story)
+    return new Story(response.data.story);
+
+  }
 }
 
 
