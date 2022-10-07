@@ -183,9 +183,7 @@ class User {
    *  Update current user's favorites in API
    */
   async removeFavorite(story) {
-    console.debug("before slice", this.favorites);
-    this.favorites.splice(this.favorites.indexOf(story), 1);
-    console.log("after slice", this.favorites);
+    this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
     const token = this.loginToken;
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
