@@ -162,6 +162,8 @@ class User {
       method: "POST",
       data: { "token": token },
     });
+    console.log(story);
+    console.log(response.data);
   }
 
   /** Remove story from array `favorites` of the current user
@@ -176,7 +178,13 @@ class User {
       method: "DELETE",
       data: { "token": token },
     });
+    console.log(story);
     console.log(response.data);
+  }
+
+  /** returns true or false if story is favorited or not. */
+  isFavorite(story) {
+    return this.favorites.includes(story);
   }
 
   /** Login in user with API, make User instance & return it.
