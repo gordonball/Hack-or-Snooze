@@ -30,7 +30,8 @@ function navShowFavorites(evt) {
 
 $navFavorites.on("click", navShowFavorites);
 
-/**  */
+/** Shows list of current user's created stories
+ *  when my stories link is clicked */
 
 function navShowMyStories(evt) {
   evt.preventDefault();

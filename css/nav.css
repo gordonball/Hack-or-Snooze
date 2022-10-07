@@ -21,3 +21,7 @@ nav {
   margin-left: auto;
   text-align: right;
 }
+
+.Trash:hover {
+  color: red;
+}

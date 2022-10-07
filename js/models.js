@@ -105,16 +105,23 @@ class StoryList {
 
   }
 
-  //TODO: docstring
+  /** Removes story data from API, story list, and user's own story list
+   *  - user - the current instance of User who created the story
+   *  - storyId - the id of target story being deleted
+   */
+
   async removeStory(user, storyId) {
 
     this.stories = this.stories.filter(s => s.storyId !== storyId);
-    currentUser.ownStories = currentUser.ownStories.filter(s => s.storyId !== storyId);
-
-
+    user.ownStories = user.ownStories.filter(
+      s => s.storyId !== storyId
+    );
+    user.favorites = user.favorites.filter(
+      s => s.storyId !== storyId
+    );
 
     const token = user.loginToken;
-    const response = await axios({
+    await axios({
       url: `${BASE_URL}/stories/${storyId}`,
       method: "DELETE",
       data: { "token": token }
@@ -186,6 +193,7 @@ class User {
    *
    *  Update current user's favorites in API
    */
+
   async addFavorite(story) {
     this.favorites.push(story);
     const token = this.loginToken;
@@ -202,6 +210,7 @@ class User {
    *
    *  Update current user's favorites in API
    */
+
   async removeFavorite(story) {
     this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
     const token = this.loginToken;
@@ -214,15 +223,17 @@ class User {
     console.log(response.data);
   }
 
+  //TODO: Docstring mention inputs
   /** Returns true or false if story is favorited or not. */
   isFavorite(story) {
     return this.favorites.some(s => s.storyId === story.storyId);
   }
 
-  //TODO: docstring
+  /** Returns true or false if story is created by current user or not */
   isMyStory(story) {
     return this.ownStories.some(s => s.storyId === story.storyId);
   }
+
   /** Login in user with API, make User instance & return it.
 
    * - username: an existing user's username

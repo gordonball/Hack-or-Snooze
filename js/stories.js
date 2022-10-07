@@ -50,18 +50,19 @@ function getStarHtml(story) {
   return `<i class="Star bi-star${starType}"></i>`;
 }
 
-//TODO: docstring
-/** */
+/** Creates a Bootstrap Icon of bi-trash if story is created by user
+ *
+ *  Returns a HTML string
+ */
 
 function getTrashHtml(story) {
   const isMyStory = currentUser.isMyStory(story);
   return isMyStory ? '<i class="Trash bi-trash"></i>' : "";
-
 }
 
-/** When Bootstrap Icon is clicked:
+/** When Bootstrap Star Icon is clicked:
  *
- * - Toggles Bootstrap icon
+ * - Toggles Bootstrap Star icon
  * - Updates API for target story
  */
 
@@ -79,8 +80,7 @@ async function handleStarClick(evt) {
   }
 }
 
-//TODO: docstring
-/** */
+/** Handles when Bootstrap Trash Icon is clicked */
 
 async function handleTrashClick(evt) {
   const $target = $(evt.target);
@@ -88,17 +88,50 @@ async function handleTrashClick(evt) {
   const storyId = $closestStory.attr("id");
 
   await storyList.removeStory(currentUser, storyId);
+}
 
+/** When Bootstrap Trash Icon is clicked in allStoriesList:
+ *
+ *  - Removes target story from UI
+ *  - Regenerates list for all stories
+ *  - Updates API for target story
+ */
+
+async function handleTrashClickAllStories(evt) {
+  await handleTrashClick(evt);
   putStoriesOnPage();
 }
 
+/** When Bootstrap Trash Icon is clicked in myStories:
+ *
+ *  - Removes target story from UI
+ *  - Regenerates list for user's stories
+ *  - Updates API for target story
+ */
+
+async function handleTrashClickMyStories(evt) {
+  await handleTrashClick(evt);
+  putMyStoriesOnPage();
+}
+
+/** When Bootstrap Trash Icon is clicked in favorites:
+ *
+ *  - Removes target story from UI
+ *  - Regenerates list for favorites
+ *  - Updates API for target story
+ */
+
+ async function handleTrashClickFavorites(evt) {
+  await handleTrashClick(evt);
+  putFavoritesOnPage();
+}
 
 $allStoriesList.on("click", ".Star", handleStarClick);
-$allStoriesList.on("click", ".Trash", handleTrashClick);
+$allStoriesList.on("click", ".Trash", handleTrashClickAllStories);
 $favoriteStories.on("click", ".Star", handleStarClick);
+$favoriteStories.on("click", ".Trash", handleTrashClickFavorites);
 $myStories.on("click", ".Star", handleStarClick);
-$myStories.on("click", ".Trash", handleTrashClick);
-
+$myStories.on("click", ".Trash", handleTrashClickMyStories);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
